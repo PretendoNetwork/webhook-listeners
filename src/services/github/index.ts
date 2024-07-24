@@ -1,4 +1,5 @@
 import express from 'express';
+import processIssue from '@/services/github/process-issue';
 import proxyDiscord from '@/services/github/proxy-discord';
 import config from '@/config-manager';
 import type { EventPayloadMap } from '@octokit/webhooks-types';
@@ -10,6 +11,11 @@ router.post(config.github.webhook_path!, async (request: express.Request, respon
 
 	if (event === 'ping') {
 		response.status(200).send('Pong');
+		return;
+	}
+
+	if (event === 'issues') {
+		await processIssue(request, response);
 		return;
 	}
 

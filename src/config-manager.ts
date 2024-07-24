@@ -21,4 +21,17 @@ const config: Config = {
 	}
 };
 
+
+if (
+	process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_ID &&
+	process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_PRIVATE_KEY_PATH &&
+	process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_INSTALLATION_ID
+) {
+	config.github.app = {
+		id: parseInt(process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_ID),
+		private_key_path: process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_PRIVATE_KEY_PATH,
+		installation_id: parseInt(process.env.PN_WEBHOOKS_CONFIG_GITHUB_APP_INSTALLATION_ID)
+	};
+}
+
 export default config;
