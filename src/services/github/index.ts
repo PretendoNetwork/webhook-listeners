@@ -1,5 +1,6 @@
 import express from 'express';
 import processIssue from '@/services/github/process-issue';
+import processPullRequest from '@/services/github/process-pull-request';
 import proxyDiscord from '@/services/github/proxy-discord';
 import config from '@/config-manager';
 import type { EventPayloadMap } from '@octokit/webhooks-types';
@@ -16,6 +17,11 @@ router.post(config.github.webhook_path!, async (request: express.Request, respon
 
 	if (event === 'issues') {
 		await processIssue(request, response);
+		return;
+	}
+
+	if (event === 'pull_request') {
+		await processPullRequest(request, response);
 		return;
 	}
 
