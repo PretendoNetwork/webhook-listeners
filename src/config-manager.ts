@@ -16,6 +16,7 @@ const config: Config = {
 	},
 	github: {
 		webhook_path: process.env.PN_WEBHOOKS_CONFIG_GITHUB_PATH,
+		webhook_secret:  process.env.PN_WEBHOOKS_CONFIG_GITHUB_WEBHOOK_SECRET,
 		discord_webhook_url: process.env.PN_WEBHOOKS_CONFIG_GITHUB_DISCORD_WEBHOOK_URL,
 		discord_webhook_repo_blacklist: githubRepoBlacklist
 	}
