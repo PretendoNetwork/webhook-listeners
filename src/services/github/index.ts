@@ -16,6 +16,11 @@ router.post(config.github.webhook_path!, githubMiddleware, async (request: expre
 		return;
 	}
 
+	if (request.body.repository && config.github.discord_webhook_repo_blacklist.includes(request.body.repository.full_name)) {
+		response.status(200).send('Repository is blacklisted. No action taken.');
+		return;
+	}
+
 	if (event === 'issues') {
 		await processIssue(request, response);
 		return;

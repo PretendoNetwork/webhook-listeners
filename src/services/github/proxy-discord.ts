@@ -15,11 +15,6 @@ export default async function proxyDiscord(request: express.Request, response: e
 		return;
 	}
 
-	if (config.github.discord_webhook_repo_blacklist.includes(repository.full_name)) {
-		response.status(200).send('Repository is blacklisted. No action taken.');
-		return;
-	}
-
 	try {
 		const headers = { ...request.headers };
 		delete headers.host;
