@@ -11,6 +11,11 @@ const ISSUE_APPROVED_REGEX = /- \[[xX]\] What I'm implementing was an/;
 const TESTED_CHANGES_REGEX = /- \[[xX]\] I have tested all of my changes\./;
 
 export default async function processPullRequest(request: express.Request, response: express.Response): Promise<void> {
+	if (!octokit) {
+		response.sendStatus(200);
+		return;
+	}
+
 	const payload = request.body as EventPayloadMap['pull_request'];
 
 	if (payload.action !== 'opened') {

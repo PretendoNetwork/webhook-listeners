@@ -9,6 +9,11 @@ const CHECKED_FOR_EXISTING_REGEX = /- \[[xX]\] I have checked the repository for
 const DETAILS_REGEX = /###.*?\n[\s\S]*?###(.*)?\n([\s\S]*?)### Any other details to share\? \(OPTIONAL\)/;
 
 export default async function processIssue(request: express.Request, response: express.Response): Promise<void> {
+	if (!octokit) {
+		response.sendStatus(200);
+		return;
+	}
+
 	const payload = request.body as EventPayloadMap['issues'];
 
 	if (payload.action !== 'opened') {
