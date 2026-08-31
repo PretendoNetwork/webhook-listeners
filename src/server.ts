@@ -26,7 +26,29 @@ if (config.github.webhook_path) {
 }
 
 async function main(): Promise<void> {
-	app.listen(config.http.port);
+	const server = app.listen(config.http.port);
+
+	const shutdown = (signal: NodeJS.Signals): void => {
+		console.log(`Received ${signal}, shutting down`);
+
+		const timeout = setTimeout(() => {
+			console.error('Server did not close in time, forcing exit');
+			process.exit(1);
+		}, 5000);
+		timeout.unref();
+
+		server.close((error) => {
+			if (error) {
+				console.error(error);
+				process.exit(1);
+			}
+
+			process.exit(0);
+		});
+	};
+
+	process.on('SIGINT', shutdown);
+	process.on('SIGTERM', shutdown);
 }
 
 main().catch(console.error);
