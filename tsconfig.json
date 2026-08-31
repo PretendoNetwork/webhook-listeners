@@ -3,9 +3,8 @@
 		"target": "ES2022",
 		"module": "ES2022",
 		"moduleResolution": "Bundler",
-		"baseUrl": "./src",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./src/*"]
 		},
 		"sourceMap": true,
 		"outDir": "./dist",
